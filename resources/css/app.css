@@ -1,0 +1,60 @@
+@import url('https://fonts.bunny.net/css?family=inter:400,500,600,700,800,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html { font-size: 16px; }
+    body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.005em; }
+    [x-cloak] { display: none !important; }
+}
+
+@layer utilities {
+    .bg-blue-600 { background-color: #089850 !important; }
+    .bg-blue-700 { background-color: #007a42 !important; }
+    .bg-blue-50 { background-color: #effaf4 !important; }
+    .bg-blue-100 { background-color: #d8f3e5 !important; }
+    .text-blue-600, .text-indigo-600 { color: #089850 !important; }
+    .text-blue-700, .text-indigo-700 { color: #007a42 !important; }
+    .bg-indigo-600 { background-color: #089850 !important; }
+    .bg-indigo-50 { background-color: #effaf4 !important; }
+    .border-indigo-200 { border-color: #a8e4c2 !important; }
+    .text-blue-300 { color: #72d6a2 !important; }
+    .text-blue-100 { color: #d8f3e5 !important; }
+    .border-blue-200 { border-color: #a8e4c2 !important; }
+    .border-blue-300 { border-color: #73d19c !important; }
+    .shadow-blue-200 { --tw-shadow-color: rgb(8 152 80 / 0.2) !important; }
+    .accent-blue-600 { accent-color: #089850 !important; }
+    .hover\\:bg-blue-700:hover { background-color: #007a42 !important; }
+    .hover\\:bg-blue-50:hover { background-color: #effaf4 !important; }
+    .hover\\:text-blue-700:hover { color: #007a42 !important; }
+    .focus\\:border-blue-500:focus { border-color: #089850 !important; }
+    .focus\\:ring-blue-100:focus { --tw-ring-color: rgb(8 152 80 / 0.15) !important; }
+}
+
+@layer components {
+    .nav-link { @apply mb-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-slate-600 transition hover:bg-blue-50 hover:text-blue-700; }
+    .nav-active { @apply bg-blue-600 text-white shadow-md shadow-blue-200 hover:bg-blue-600 hover:text-white; }
+    .card { @apply rounded-2xl border border-slate-200 bg-white shadow-sm; }
+    .page-title { @apply text-[30px] font-extrabold tracking-tight text-slate-800 sm:text-[32px]; }
+    .page-sub { @apply mt-1 text-[15px] text-slate-500; }
+    .input { @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-[15px] text-slate-800 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100; }
+    .label { @apply mb-1.5 block text-sm font-semibold text-slate-700; }
+    .btn-primary { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-[15px] font-bold text-white shadow-sm transition hover:bg-blue-700 active:scale-[.98]; }
+    .btn-ghost { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-slate-100 px-4 py-2.5 text-[15px] font-semibold text-slate-600 transition hover:bg-slate-200; }
+    .btn-danger { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-red-50 px-4 py-2.5 text-[15px] font-semibold text-red-600 transition hover:bg-red-100; }
+    .btn-success { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-[15px] font-bold text-white transition hover:bg-emerald-700 disabled:opacity-40; }
+    .badge { @apply inline-flex items-center rounded-full px-2.5 py-1 text-[13px] font-semibold; }
+    .table-wrap { @apply w-full max-w-full overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm; }
+    .table-wrap > table { @apply w-full text-[15px]; }
+    .table-wrap > table thead { @apply bg-slate-50 text-left text-xs font-bold uppercase tracking-wider text-slate-400; }
+    .table-wrap > table th { @apply px-4 py-3; }
+    .table-wrap > table td { @apply px-4 py-3 align-middle; }
+    .table-wrap > table tbody tr + tr { @apply border-t border-slate-100; }
+    .table-wrap > table tbody tr:hover { @apply bg-slate-50/70; }
+    .empty-state { @apply flex flex-col items-center gap-2 px-6 py-16 text-center text-slate-400; }
+    .alert-success { @apply rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-emerald-700; }
+    .alert-error { @apply rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700; }
+    .icon { @apply h-[18px] w-[18px] shrink-0; }
+}
