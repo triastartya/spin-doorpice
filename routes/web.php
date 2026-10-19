@@ -33,6 +33,7 @@ Route::prefix('absensi')->middleware('throttle:absensi')->group(function () {
 
 Route::prefix('peserta')->group(function () {
     Route::get('/', [ParticipantController::class, 'dashboard']);
+    Route::get('/pemenang', [ParticipantController::class, 'winners']);
     Route::post('/logout', [ParticipantController::class, 'logout']);
 });
 

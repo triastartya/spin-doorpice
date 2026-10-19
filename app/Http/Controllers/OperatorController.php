@@ -129,7 +129,7 @@ class OperatorController extends Controller
             if ($spin->status === 'berjalan') {
                 $duration = $spin->prize->category === 'utama'
                     ? ($spin->prize->spin_duration * 3) + $spin->prize->last_digit_duration + 2
-                    : max(3, $spin->winner_count);
+                    : 10;
                 if ($spin->updated_at->lt(now()->subSeconds($duration))) {
                     $service->complete($spin->refresh());
                     $transitioned = true;
@@ -145,7 +145,7 @@ class OperatorController extends Controller
             'phase' => $spin?->status ?? 'idle',
             'spin' => $spin ? [
                 'id' => $spin->id, 'mode' => $spin->mode, 'status' => $spin->status,
-                'prize_name' => $spin->prize->name, 'prize_image' => $spin->prize->image_path ? '/'.$spin->prize->image_path : null, 'spin_duration' => $spin->prize->category === 'utama' ? $spin->prize->spin_duration : null, 'last_digit_duration' => $spin->prize->category === 'utama' ? $spin->prize->last_digit_duration : null, 'winner_count' => $spin->winner_count, 'unserved_count' => $spin->unserved_count,
+                'prize_name' => $spin->prize->name, 'prize_image' => $spin->prize->image_url, 'spin_duration' => $spin->prize->category === 'utama' ? $spin->prize->spin_duration : null, 'last_digit_duration' => $spin->prize->category === 'utama' ? $spin->prize->last_digit_duration : null, 'winner_count' => $spin->winner_count, 'unserved_count' => $spin->unserved_count,
                 'codes' => $service->wheelSnapshot($event, $spin),
                 'winners' => $spin->status === 'siap' ? [] : $spin->winners->map(fn ($winner) => ['code' => $winner->coupon->code, 'name' => $winner->coupon->employee->name, 'nik' => $winner->coupon->employee->nik, 'department' => $winner->coupon->employee->department]),
             ] : null,

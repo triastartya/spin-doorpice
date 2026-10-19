@@ -133,6 +133,41 @@ class ParticipantController extends Controller
         return view('participant.dashboard', compact('employee', 'event', 'coupon'));
     }
 
+    public function winners(Request $request)
+    {
+        $employeeId = session('participant');
+
+        if (! $employeeId) {
+            return redirect('/absensi');
+        }
+
+        $employee = Employee::findOrFail($employeeId);
+
+        $event = Event::whereIn('status', ['aktif', 'spin'])->latest('id')->first();
+
+        if (! $event) {
+            return view('participant.winners', ['employee' => $employee, 'event' => null, 'winners' => collect(), 'prizes' => collect(), 'q' => null, 'prizeId' => null]);
+        }
+
+        $query = $event->winners()->with(['coupon.employee', 'prize']);
+
+        if ($q = trim((string) $request->get('q'))) {
+            $query->where(function ($w) use ($q) {
+                $w->whereHas('coupon', fn ($c) => $c->where('code', 'like', "%{$q}%"))
+                    ->orWhereHas('coupon.employee', fn ($e) => $e->where('name', 'like', "%{$q}%"));
+            });
+        }
+
+        if ($prizeId = $request->get('prize_id')) {
+            $query->where('prize_id', $prizeId);
+        }
+
+        $winners = $query->orderByDesc('id')->paginate(30)->withQueryString();
+        $prizes = $event->prizes()->orderBy('name')->get(['id', 'name']);
+
+        return view('participant.winners', compact('employee', 'event', 'winners', 'prizes', 'q', 'prizeId'));
+    }
+
     public function logout(Request $request)
     {
         $request->session()->forget('participant');

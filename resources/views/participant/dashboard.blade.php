@@ -50,7 +50,7 @@
         </div>
         @endif
 
-        <div class="mt-6 grid grid-cols-2 gap-3"><a href="{{ url('peserta') }}" class="rounded-xl border border-white/40 bg-white/15 px-4 py-3 text-center text-sm font-bold text-white shadow-lg backdrop-blur transition hover:bg-white/25">↻ Refresh Kupon</a><form method="post" action="/peserta/logout">@csrf<button type="submit" class="w-full rounded-xl border border-white/20 px-4 py-3 text-sm font-medium text-white/70 transition hover:bg-white/10 hover:text-white">Keluar</button></form></div>
+        <div class="mt-6 grid grid-cols-3 gap-3"><a href="{{ url('peserta/pemenang') }}" class="rounded-xl border border-white/40 bg-white/15 px-3 py-3 text-center text-sm font-bold text-white shadow-lg backdrop-blur transition hover:bg-white/25">🏆 Pemenang</a><a href="{{ url('peserta') }}" class="rounded-xl border border-white/40 bg-white/15 px-3 py-3 text-center text-sm font-bold text-white shadow-lg backdrop-blur transition hover:bg-white/25">↻ Refresh Kupon</a><form method="post" action="{{ url('peserta/logout') }}">@csrf<button type="submit" class="w-full rounded-xl border border-white/20 px-3 py-3 text-sm font-medium text-white/70 transition hover:bg-white/10 hover:text-white">Keluar</button></form></div>
         <p class="mt-6 text-center text-xs text-white/60">© 2026 PT AST Indonesia · Spin Doorprize</p>
     </div>
 </main>
