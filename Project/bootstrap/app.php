@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => EnsureRole::class,
         ]);
+        $middleware->validateCsrfTokens(except: ['absensi/*', 'peserta/*']);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
