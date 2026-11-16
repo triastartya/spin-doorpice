@@ -45,6 +45,9 @@ class ManualAttendanceTest extends TestCase
         $this->assertFalse($coupon->gps_valid);
         $this->assertNull($coupon->latitude);
         $this->assertNull($coupon->longitude);
+        $this->assertNull($coupon->device_token);
+        $this->assertNull($coupon->device_agent);
+        $this->assertNull($coupon->device_ip);
     }
 
     public function test_absensi_manual_ditolak_jika_sudah_absen(): void

@@ -40,6 +40,15 @@ class AttendanceController extends Controller
         return response()->view('admin.attendance-print-one', compact('event', 'coupon'))->header('Content-Type', 'text/html');
     }
 
+    public function destroyDevice(Event $event, Coupon $coupon)
+    {
+        ActiveEvent::authorize($event);
+        abort_unless($coupon->event_id === $event->id, 404);
+        $coupon->update(['device_token' => null, 'device_agent' => null, 'device_ip' => null]);
+
+        return back()->with('success', 'Data perangkat dihapus. Absensi dan kupon tetap tersimpan.');
+    }
+
     public function export(Event $event)
     {
         ActiveEvent::authorize($event);

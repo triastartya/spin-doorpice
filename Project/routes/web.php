@@ -83,6 +83,7 @@ Route::middleware(['auth', 'role:admin,operator'])->prefix('admin')->group(funct
     Route::put('prizes/{prize}', [PrizeController::class, 'update']);
     Route::delete('prizes/{prize}', [PrizeController::class, 'destroy']);
     Route::get('events/{event}/attendance', [AttendanceController::class, 'index']);
+    Route::delete('events/{event}/attendance/{coupon}/device', [AttendanceController::class, 'destroyDevice']);
     Route::get('events/{event}/attendance/print', [AttendanceController::class, 'print']);
     Route::get('events/{event}/attendance/print/{coupon}', [AttendanceController::class, 'printOne']);
     Route::get('events/{event}/attendance/export', [AttendanceController::class, 'export']);

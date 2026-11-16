@@ -8,15 +8,47 @@ use App\Models\Event;
 use App\Support\Geo;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class ParticipantController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('participant.absensi', ['event' => Event::whereIn('status', ['aktif', 'spin'])->latest('id')->first()]);
+        $token = $this->deviceToken($request);
+        $event = Event::whereIn('status', ['aktif', 'spin'])->latest('id')->first();
+        $deviceCoupon = $event?->coupons()->where('device_token', $token)->with('employee')->first();
+        if ($deviceCoupon) {
+            session(['participant' => $deviceCoupon->employee_id]);
+        }
+
+        return view('participant.absensi', compact('event', 'deviceCoupon'));
+    }
+
+    protected function deviceToken(Request $request): string
+    {
+        $token = (string) $request->cookie('absensi_device', '');
+
+        if ($token === '' || strlen($token) < 20) {
+            $token = Str::random(40);
+            Cookie::queue('absensi_device', $token, 525600);
+        }
+
+        return $token;
+    }
+
+    protected function deviceCoupon(Request $request, ?Event $event): ?Coupon
+    {
+        $token = (string) $request->cookie('absensi_device', '');
+
+        if ($token === '') {
+            return null;
+        }
+
+        return $event?->coupons()->where('device_token', $token)->first();
     }
 
     public function checkNik(Request $request)
@@ -30,7 +62,20 @@ class ParticipantController extends Controller
         }
 
         $event = Event::whereIn('status', ['aktif', 'spin'])->latest('id')->first();
-        $coupon = $event?->coupons()->where('employee_id', $employee->id)->first();
+        $token = $this->deviceToken($request);
+        $coupon = $event ? DB::transaction(function () use ($event, $employee, $token, $request) {
+            $event = Event::whereKey($event->id)->lockForUpdate()->firstOrFail();
+            $bound = $event->coupons()->where('device_token', $token)->with('employee')->first();
+            if ($bound && $bound->employee_id !== $employee->id) {
+                throw ValidationException::withMessages(['nik' => 'Perangkat ini sudah digunakan untuk absensi NIK '.$bound->employee->nik.' ('.$bound->employee->name.').']);
+            }
+            $coupon = $event->coupons()->where('employee_id', $employee->id)->first();
+            if ($coupon && ! $coupon->device_token) {
+                $coupon->update(['device_token' => $token, 'device_agent' => $request->userAgent(), 'device_ip' => $request->ip()]);
+            }
+
+            return $coupon;
+        }, 3) : null;
 
         if ($coupon) {
             session(['participant' => $employee->id]);
@@ -81,11 +126,27 @@ class ParticipantController extends Controller
             throw ValidationException::withMessages(['gps' => 'Posisi Anda di luar radius acara ('.round($distance).' m dari pusat, maksimal '.$event->radius_meter.' m). Jadwal absensi: '.($event->absensi_buka?->format('d M Y H:i') ?? 'tidak dibatasi').' – '.($event->absensi_tutup?->format('d M Y H:i') ?? 'tidak dibatasi').'.']);
         }
 
+        $token = $this->deviceToken($request);
+
+        $deviceCoupon = $this->deviceCoupon($request, $event);
+
+        if ($deviceCoupon && $deviceCoupon->employee_id !== $employee->id) {
+            throw ValidationException::withMessages(['nik' => 'Perangkat ini sudah digunakan untuk absensi NIK '.$deviceCoupon->employee->nik.' ('.$deviceCoupon->employee->name.').']);
+        }
+
         try {
-            [$coupon, $alreadyAttended] = DB::transaction(function () use ($event, $employee, $data) {
+            [$coupon, $alreadyAttended] = DB::transaction(function () use ($event, $employee, $data, $token, $request) {
                 $event = Event::whereKey($event->id)->lockForUpdate()->firstOrFail();
+                $bound = $event->coupons()->where('device_token', $token)->first();
+                if ($bound && $bound->employee_id !== $employee->id) {
+                    throw ValidationException::withMessages(['nik' => 'Perangkat ini sudah digunakan untuk NIK lain.']);
+                }
 
                 if ($coupon = $event->coupons()->where('employee_id', $employee->id)->first()) {
+                    if (! $coupon->device_token) {
+                        $coupon->update(['device_token' => $token, 'device_agent' => $request->userAgent(), 'device_ip' => $request->ip()]);
+                    }
+
                     return [$coupon, true];
                 }
 
@@ -100,6 +161,9 @@ class ParticipantController extends Controller
                     'longitude' => $data['longitude'],
                     'accuracy' => $data['accuracy'] ?? null,
                     'gps_valid' => true,
+                    'device_token' => $token,
+                    'device_agent' => $request->userAgent(),
+                    'device_ip' => $request->ip(),
                 ]), false];
             }, 3);
         } catch (QueryException $e) {
