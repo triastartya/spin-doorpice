@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Panduan Absensi</title>
+<style>
+@page{size:A4;margin:0}*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;color:#18352b}.page{width:210mm;height:297mm;overflow:hidden;background:#f4faf7;position:relative}.hero{height:40mm;padding:7mm 14mm;color:white;background:#078d4b;position:relative}.hero:after{content:"";position:absolute;width:85mm;height:85mm;border-radius:50%;right:-20mm;top:-38mm;background:rgba(255,255,255,.08)}.brand{display:flex;align-items:center;gap:3mm}.logo{width:21mm;height:14mm;background:white;border-radius:3mm;padding:2mm;object-fit:contain}.brand b{font-size:11pt}.brand small{display:block;color:#c9f4df;margin-top:1mm;font-size:7pt}.eyebrow{margin-top:5mm;font-size:7pt;font-weight:bold;letter-spacing:2px;color:#d4f5e5}.hero h1{font-size:22pt;line-height:1.02;margin:1mm 0}.yellow{color:#ffe46a}.hero p{font-size:8pt;color:#dcf6e9;margin:2mm 0}.content{padding:5mm 12mm 18mm}.intro{text-align:center;margin-bottom:3mm}.intro h2{font-size:13pt;margin:0 0 1mm}.intro p{font-size:7.5pt;color:#668078;margin:0}.row{display:flex;justify-content:center;gap:5mm;margin-bottom:4mm}.row-2{gap:10mm}.step{width:48mm;text-align:center}.phone{position:relative;height:88mm;background:#17231f;border:1.7mm solid #17231f;border-radius:6mm;padding:2.2mm;box-shadow:0 2mm 5mm rgba(0,70,40,.18);overflow:hidden}.phone:after{content:"";position:absolute;top:2.4mm;left:50%;transform:translateX(-50%);width:15mm;height:1.8mm;background:#17231f;border-radius:1mm}.real-shot{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:4mm}.step h3{font-size:8pt;line-height:1.15;margin:2.5mm 0 1mm;color:#173d31}.step p{font-size:6.5pt;line-height:1.3;color:#667c74;margin:0}.number{display:inline-block;background:#078d4b;color:white;border-radius:50%;width:5.5mm;height:5.5mm;line-height:5.5mm;margin-right:1mm}.notice{margin-top:3mm;background:#fff5d8;border:1px solid #f0d78a;border-radius:3mm;padding:2.5mm 5mm;display:flex;gap:5mm;align-items:center}.notice b{font-size:7.5pt;color:#795b00;white-space:nowrap}.notice span{font-size:6.3pt;color:#826f36;line-height:1.25}.footer{position:absolute;z-index:5;left:0;right:0;bottom:0;height:13mm;text-align:center;background:#f4faf7;border-top:1px solid #d9e8e1;padding:2mm 12mm 0;font-size:6.4pt;line-height:1.4;color:#6c8179}.footer b{color:#078d4b}
+</style>
+</head>
+<body><div class="page">
+<section class="hero"><div class="brand"><img class="logo" src="{{ public_path('images/astindo-logo.png') }}"><div><b>PT AST Indonesia</b><small>Sumitomo Forestry Group</small></div></div><div class="eyebrow">PANDUAN ABSENSI PESERTA</div><h1>Cara Absen <span class="yellow">& Dapatkan Kupon</span></h1><p>Ikuti 5 langkah mudah melalui HP Anda.</p></section>
+<section class="content"><div class="intro"><h2>Absen melalui website atau QR Code panitia</h2><p>Gunakan tampilan HP dan pastikan GPS aktif selama proses absensi.</p></div>
+<div class="row">
+<div class="step"><div class="phone"><img class="real-shot" src="{{ public_path('images/guide/landing-real.png') }}" alt="Landing page aplikasi"></div><h3><span class="number">1</span> Masuk Website</h3><p>Buka link atau scan QR panitia, lalu klik <b>Absen & Ambil Kupon</b>.</p></div>
+<div class="step"><div class="phone"><img class="real-shot" src="{{ public_path('images/guide/absensi-real.png') }}" alt="Halaman absensi"></div><h3><span class="number">2</span> Masukkan NIK</h3><p>Masukkan NIK <b>EMP07674</b>, lalu klik <b>Lanjutkan</b>.</p></div>
+<div class="step"><div class="phone"><img class="real-shot" src="{{ public_path('images/guide/konfirmasi-real.png') }}" alt="Konfirmasi data peserta"></div><h3><span class="number">3</span> Konfirmasi Data</h3><p>Pastikan data benar, lalu klik <b>Izinkan Lokasi & Absen</b>.</p></div>
+</div>
+<div class="row row-2">
+<div class="step"><div class="phone"><img class="real-shot" src="{{ public_path('images/guide/berhasil-real.png') }}" alt="Absensi berhasil dan kode kupon"></div><h3><span class="number">4</span> Simpan Kupon</h3><p>Setelah berhasil, simpan kode kupon lalu klik <b>Buka Dashboard Peserta</b>.</p></div>
+<div class="step"><div class="phone"><img class="real-shot" src="{{ public_path('images/guide/dashboard-real.png') }}" alt="Dashboard peserta"></div><h3><span class="number">5</span> Dashboard Peserta</h3><p>Dashboard menampilkan kode kupon dan informasi pemenang.</p></div>
+</div>
+<div class="notice"><b>PERHATIAN</b><span>Gunakan NIK karyawan yang belum absen • Aktifkan GPS • Izinkan lokasi • Absen hanya selama jadwal dibuka dan di area acara</span></div></section>
+<div class="footer">Simpan kode kupon Anda dan jangan membagikannya kepada orang lain.<br><b>Selamat mengikuti Spin Doorprize!</b></div>
+</div></body></html>
