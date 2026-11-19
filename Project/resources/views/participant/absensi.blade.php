@@ -17,7 +17,7 @@
         <div class="text-center">
             <p class="text-sm font-bold uppercase tracking-[.25em] text-emerald-100">Absensi & Kupon</p>
             <h1 class="mt-3 text-4xl font-extrabold leading-tight">{{ $event?->name ?? 'Spin Doorprize' }}</h1>
-            <p class="mt-3 text-sm text-white/70">@if($event)Masukkan NIK Anda untuk mendapatkan kupon undian.@elseBelum ada acara aktif.@endif</p>
+            <p class="mt-3 text-sm text-white/70">{{ $event ? 'Masukkan NIK Anda untuk mendapatkan kupon undian.' : 'Belum ada acara aktif.' }}</p>
         </div>
         <div class="mt-8 rounded-3xl border border-white/40 bg-white/95 p-7 text-slate-800 shadow-2xl backdrop-blur">
             @if($deviceCoupon)

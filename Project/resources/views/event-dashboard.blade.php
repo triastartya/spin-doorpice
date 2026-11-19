@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Acara Aktif')
 @section('content')
+<form method="post" action="{{ url('admin/database/backup') }}" class="mb-5 flex justify-end">@csrf<button class="btn-primary">Backup Database</button></form>
 @if(!$event)
 <div class="mx-auto mt-16 max-w-xl rounded-2xl border border-amber-200 bg-amber-50 p-8 text-center">
     <p class="text-4xl">🎪</p>

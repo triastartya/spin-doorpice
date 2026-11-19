@@ -69,6 +69,7 @@ Route::middleware(['auth', 'role:admin,operator'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin,operator'])->prefix('admin')->group(function () {
+    Route::post('database/backup', [DashboardController::class, 'backup'])->middleware('throttle:2,1');
     Route::resource('employees', EmployeeController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('users', UserController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::get('employees-import', [EmployeeController::class, 'importForm']);
